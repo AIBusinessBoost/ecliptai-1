@@ -29,15 +29,19 @@ export default function Navbar() {
       <div className="container mx-auto px-4 md:px-6">
         <div className="flex items-center justify-between">
           <div className="flex items-center">
-            <div className="h-10 w-40 relative mr-2">
-              <Image 
-                src="/images/ecliptai-logo-clean.svg"
-                alt="EcliptAI Logo"
-                fill
-                style={{ objectFit: 'contain' }}
-                priority
-              />
-            </div>
+            <a href="#" className="flex items-center">
+              <div className="relative h-10 w-10 mr-2">
+                <Image 
+                  src="/images/ecliptai-logo.svg" 
+                  alt="EcliptAI Logo" 
+                  width={40} 
+                  height={40} 
+                  className="object-contain"
+                  priority
+                />
+              </div>
+              <span className="text-2xl font-display font-bold text-transparent bg-clip-text bg-gradient-to-r from-blue-400 to-purple-500">EcliptAI</span>
+            </a>
           </div>
           
           <div className="hidden md:flex items-center space-x-8">
@@ -79,14 +83,4 @@ export default function Navbar() {
               <a href="#features" className="block px-4 py-2 text-gray-300 hover:bg-gray-700 rounded-md">Features</a>
               <a href="#solutions" className="block px-4 py-2 text-gray-300 hover:bg-gray-700 rounded-md">Solutions</a>
               <a href="#testimonials" className="block px-4 py-2 text-gray-300 hover:bg-gray-700 rounded-md">Testimonials</a>
-              <a href="#contact" className="block px-4 py-2 text-gray-300 hover:bg-gray-700 rounded-md">Contact</a>
-              <a href="#calculator" className="block mx-4 mt-2 text-center bg-gradient-to-r from-blue-500 to-purple-600 text-white px-5 py-2 rounded-full font-medium hover:from-blue-600 hover:to-purple-700">
-                Calculate Savings
-              </a>
-            </motion.div>
-          )}
-        </AnimatePresence>
-      </div>
-    </motion.nav>
-  )
-}
+              <a href="#contact" className="block px-4 py
