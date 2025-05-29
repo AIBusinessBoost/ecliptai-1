@@ -82,4 +82,7 @@ export default function Hero() {
       </section>
       
       {/* Calculator moved directly below the hero section */}
-      
+      <RevenueCalculator />
+    </>
+  )
+}
