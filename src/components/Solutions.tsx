@@ -1,132 +1,116 @@
 'use client'
 
-import { useState } from 'react'
 import { motion } from 'framer-motion'
 import { useInView } from 'react-intersection-observer'
 
 export default function Solutions() {
-  const [activeTab, setActiveTab] = useState('missedCalls')
   const [ref, inView] = useInView({
     triggerOnce: true,
-    threshold: 0.1,
+    threshold: 0.1
   })
   
-  const solutions = {
-    missedCalls: {
-      title: 'Missed Call Recovery',
-      description: 'Never lose another lead due to missed calls. Our AI system automatically follows up with callers who didn\'t get through, scheduling callbacks or providing immediate assistance via text.',
+  const solutions = [
+    {
+      title: "For Small Businesses",
+      description: "Affordable AI automation that helps small businesses compete with larger companies by maximizing every lead and opportunity.",
+      image: "https://images.pexels.com/photos/3184405/pexels-photo-3184405.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2",
       features: [
-        'Automatic SMS follow-up for missed calls',
-        'AI-powered call qualification and routing',
-        'Scheduled callbacks at optimal times',
-        'Call analytics and conversion tracking',
-        'Integration with your CRM system'
-      ],
-      image: 'https://images.pexels.com/photos/3755755/pexels-photo-3755755.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2'
+        "Automated call follow-ups",
+        "Email marketing automation",
+        "Simple CRM integration",
+        "Affordable monthly plans"
+      ]
     },
-    emailWarming: {
-      title: 'Email List Warming',
-      description: 'Keep your email list engaged and responsive with personalized, AI-generated content that maintains relationships and prevents list decay.',
+    {
+      title: "For Service Providers",
+      description: "Specialized solutions for service businesses to reduce no-shows, automate appointment reminders, and increase bookings.",
+      image: "https://images.pexels.com/photos/3184338/pexels-photo-3184338.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2",
       features: [
-        'Personalized email sequences based on user behavior',
-        'AI content generation for relevant topics',
-        'Optimal send time prediction',
-        'List segmentation and targeting',
-        'Performance analytics and A/B testing'
-      ],
-      image: 'https://images.pexels.com/photos/7112/woman-typing-writing-windows.jpg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2'
+        "Appointment scheduling",
+        "Automated reminders",
+        "Review collection",
+        "Customer reactivation"
+      ]
     },
-    revenueRecovery: {
-      title: 'Revenue Leakage Prevention',
-      description: 'Identify and fix the gaps in your business operations where revenue is being lost through missed opportunities, inefficient processes, or customer churn.',
+    {
+      title: "For Enterprise",
+      description: "Scalable AI solutions for large organizations with complex needs, multiple locations, and high call volumes.",
+      image: "https://images.pexels.com/photos/3182812/pexels-photo-3182812.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2",
       features: [
-        'Comprehensive business process analysis',
-        'AI-powered revenue leakage detection',
-        'Automated workflow optimization',
-        'Customer churn prediction and prevention',
-        'ROI tracking and reporting'
-      ],
-      image: 'https://images.pexels.com/photos/7567434/pexels-photo-7567434.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2'
+        "Advanced analytics",
+        "Custom integrations",
+        "Multi-location support",
+        "Dedicated account manager"
+      ]
     }
-  }
+  ]
   
   return (
-    <section id="solutions" className="section relative z-10 py-20 bg-white">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <motion.div 
-          ref={ref}
-          initial={{ opacity: 0, y: 20 }}
-          animate={inView ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
-          transition={{ duration: 0.6 }}
-          className="text-center mb-12"
-        >
-          <h2 className="text-3xl font-display font-bold mb-4">Our Solutions</h2>
-          <p className="text-xl text-gray-600 max-w-3xl mx-auto">
-            Explore how EcliptAI can help your business recover lost revenue and optimize operations.
-          </p>
-        </motion.div>
-        
-        <div className="flex flex-wrap justify-center mb-8">
-          <div className="flex space-x-2 p-1 bg-gray-100 rounded-lg">
-            {Object.keys(solutions).map((key) => (
-              <button
-                key={key}
-                onClick={() => setActiveTab(key)}
-                className={`px-4 py-2 rounded-md transition-all ${
-                  activeTab === key 
-                    ? 'bg-white shadow-md text-primary-600' 
-                    : 'text-gray-600 hover:text-primary-600'
-                }`}
-              >
-                {solutions[key].title}
-              </button>
-            ))}
-          </div>
-        </div>
-        
+    <section id="solutions" className="py-20">
+      <div className="container mx-auto px-4 md:px-6">
         <motion.div
-          key={activeTab}
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.5 }}
-          className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center"
+          ref={ref}
+          initial={{ opacity: 0, y: 40 }}
+          animate={inView ? { opacity: 1, y: 0 } : { opacity: 0, y: 40 }}
+          transition={{ duration: 0.7 }}
+          className="max-w-5xl mx-auto"
         >
-          <div>
-            <h3 className="text-2xl font-semibold mb-4">{solutions[activeTab].title}</h3>
-            <p className="text-gray-600 mb-6">{solutions[activeTab].description}</p>
-            
-            <ul className="space-y-3">
-              {solutions[activeTab].features.map((feature, index) => (
-                <li key={index} className="flex items-start">
-                  <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5 text-primary-600 mt-1 mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
-                  </svg>
-                  <span>{feature}</span>
-                </li>
-              ))}
-            </ul>
-            
-            <div className="mt-8">
-              <a 
-                href="#contact" 
-                className="inline-flex items-center px-6 py-3 border border-transparent text-base font-medium rounded-md shadow-sm text-white bg-primary-600 hover:bg-primary-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary-500"
-              >
-                Get Started
-              </a>
-            </div>
+          <div className="text-center mb-16">
+            <h2 className="text-3xl md:text-4xl font-display font-bold mb-4">
+              Tailored Solutions for Your Business
+            </h2>
+            <p className="text-xl text-gray-600 max-w-3xl mx-auto">
+              We offer specialized AI automation solutions designed for different business types and needs.
+            </p>
           </div>
           
-          <div className="relative">
-            <div className="rounded-lg overflow-hidden shadow-lg">
-              <img 
-                src={solutions[activeTab].image} 
-                alt={solutions[activeTab].title} 
-                className="w-full h-[400px] object-cover"
-              />
-            </div>
-            <div className="absolute -bottom-6 -right-6 w-24 h-24 bg-secondary-100 rounded-full flex items-center justify-center">
-              <div className="text-secondary-600 font-bold text-xl">AI</div>
-            </div>
+          <div className="space-y-16">
+            {solutions.map((solution, index) => (
+              <motion.div
+                key={index}
+                initial={{ opacity: 0, y: 40 }}
+                animate={inView ? { opacity: 1, y: 0 } : { opacity: 0, y: 40 }}
+                transition={{ duration: 0.7, delay: index * 0.2 }}
+                className="solution-card"
+              >
+                <div className={`flex flex-col ${index % 2 === 1 ? 'md:flex-row-reverse' : 'md:flex-row'} bg-white rounded-2xl shadow-xl overflow-hidden`}>
+                  <div className="md:w-1/2">
+                    <img 
+                      src={solution.image} 
+                      alt={solution.title} 
+                      className="w-full h-64 md:h-full object-cover"
+                    />
+                  </div>
+                  <div className="md:w-1/2 p-8 md:p-10 flex flex-col justify-center">
+                    <h3 className="text-2xl font-display font-bold mb-4">
+                      {solution.title}
+                    </h3>
+                    <p className="text-gray-600 mb-6">
+                      {solution.description}
+                    </p>
+                    <ul className="space-y-3 mb-8">
+                      {solution.features.map((feature, i) => (
+                        <li key={i} className="flex items-start">
+                          <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5 text-primary-600 mr-2 mt-0.5" viewBox="0 0 20 20" fill="currentColor">
+                            <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clipRule="evenodd" />
+                          </svg>
+                          <span>{feature}</span>
+                        </li>
+                      ))}
+                    </ul>
+                    <a 
+                      href="#contact" 
+                      className="inline-flex items-center text-primary-600 font-medium hover:text-primary-700"
+                    >
+                      <span>Learn more</span>
+                      <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5 ml-1" viewBox="0 0 20 20" fill="currentColor">
+                        <path fillRule="evenodd" d="M12.293 5.293a1 1 0 011.414 0l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414-1.414L14.586 11H3a1 1 0 110-2h11.586l-2.293-2.293a1 1 0 010-1.414z" clipRule="evenodd" />
+                      </svg>
+                    </a>
+                  </div>
+                </div>
+              </motion.div>
+            ))}
           </div>
         </motion.div>
       </div>
