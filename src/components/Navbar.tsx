@@ -2,6 +2,7 @@
 
 import { useState, useEffect } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
+import Image from 'next/image'
 
 export default function Navbar() {
   const [isScrolled, setIsScrolled] = useState(false)
@@ -28,7 +29,15 @@ export default function Navbar() {
       <div className="container mx-auto px-4 md:px-6">
         <div className="flex items-center justify-between">
           <div className="flex items-center">
-            <span className="text-2xl font-display font-bold text-transparent bg-clip-text bg-gradient-to-r from-blue-400 to-purple-500">EcliptAI</span>
+            <div className="h-10 w-40 relative mr-2">
+              <Image 
+                src="/images/ecliptai-logo-clean.svg"
+                alt="EcliptAI Logo"
+                fill
+                style={{ objectFit: 'contain' }}
+                priority
+              />
+            </div>
           </div>
           
           <div className="hidden md:flex items-center space-x-8">
