@@ -4,6 +4,8 @@ import { useState, useEffect } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
 import Image from 'next/image'
 
+const MotionNav = motion.nav
+
 export default function Navbar() {
   const [isScrolled, setIsScrolled] = useState(false)
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false)
@@ -18,7 +20,7 @@ export default function Navbar() {
   }, [])
   
   return (
-    <motion.nav
+    <MotionNav
       initial={{ y: -100, opacity: 0 }}
       animate={{ y: 0, opacity: 1 }}
       transition={{ duration: 0.5 }}
@@ -83,4 +85,14 @@ export default function Navbar() {
               <a href="#features" className="block px-4 py-2 text-gray-300 hover:bg-gray-700 rounded-md">Features</a>
               <a href="#solutions" className="block px-4 py-2 text-gray-300 hover:bg-gray-700 rounded-md">Solutions</a>
               <a href="#testimonials" className="block px-4 py-2 text-gray-300 hover:bg-gray-700 rounded-md">Testimonials</a>
-              <a href="#contact" className="block px-4 py
+              <a href="#contact" className="block px-4 py-2 text-gray-300 hover:bg-gray-700 rounded-md">Contact</a>
+              <a href="#calculator" className="block px-4 py-2 mt-2 bg-gradient-to-r from-blue-500 to-purple-600 text-white rounded-md font-medium hover:from-blue-600 hover:to-purple-700 transition-all">
+                Calculate Savings
+              </a>
+            </motion.div>
+          )}
+        </AnimatePresence>
+      </div>
+    </MotionNav>
+  )
+}
