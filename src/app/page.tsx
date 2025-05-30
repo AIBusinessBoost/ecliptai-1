@@ -16,10 +16,15 @@ import FAQ from '../components/FAQ'
 import Contact from '../components/Contact'
 import Footer from '../components/Footer'
 
-// Dynamically import WebGLBackground with no SSR
+// Dynamically import WebGLBackground with no SSR and explicit suspense
 const DynamicWebGLBackground = dynamic(
   () => import('../components/WebGLBackground'),
-  { ssr: false }
+  { 
+    ssr: false,
+    loading: () => (
+      <div className="fixed inset-0 bg-black -z-10"></div>
+    )
+  }
 )
 
 export default function Home() {
@@ -45,7 +50,7 @@ export default function Home() {
         </div>
       )}
       
-      <DynamicWebGLBackground />
+      {isLoaded && <DynamicWebGLBackground />}
       <Navbar />
       
       <div className="w-full">

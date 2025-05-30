@@ -27,6 +27,10 @@ const nextConfig = {
     
     return config;
   },
+  // Add this to prevent issues with image optimization during build
+  images: {
+    unoptimized: true
+  }
 }
 
 module.exports = nextConfig

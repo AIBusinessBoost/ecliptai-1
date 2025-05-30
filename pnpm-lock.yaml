@@ -325,7 +325,7 @@ packages:
       cross-env: 7.0.3
       detect-gpu: 5.0.70
       glsl-noise: 0.0.0
-      hls.js: 1.6.2
+      hls.js: 1.6.3
       maath: 0.10.8(@types/three@0.176.0)(three@0.154.0)
       meshline: 3.3.1(three@0.154.0)
       react: 18.2.0
@@ -834,8 +834,8 @@ packages:
       function-bind: 1.1.2
     dev: false
 
-  /hls.js@1.6.2:
-    resolution: {integrity: sha512-rx+pETSCJEDThm/JCm8CuadcAC410cVjb1XVXFNDKFuylaayHk1+tFxhkjvnMDAfqsJHxZXDAJ3Uc2d5xQyWlQ==}
+  /hls.js@1.6.3:
+    resolution: {integrity: sha512-M0pCSdnWdZ/IrkjhbNm90QobrTCVeoemEFUAWg4olld/8y6GbWoMAoEQ1XhZPCQjgMihvQvPWJJkr8KZAcV9tg==}
     dev: false
 
   /ieee754@1.2.1:

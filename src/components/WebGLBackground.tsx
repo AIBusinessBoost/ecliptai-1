@@ -89,66 +89,45 @@ const GradientSphere = () => {
     if (mesh.current) {
       mesh.current.position.y = Math.sin(clock.getElapsedTime() * 0.3) * 0.2
       mesh.current.rotation.y += 0.005
-      mesh.current.rotation.z += 0.002
     }
   })
   
   return (
-    <Sphere ref={mesh} args={[2, 64, 64]} position={[0, 0, 0]}>
+    <Sphere args={[1.5, 32, 32]} position={[0, 0, 0]}>
       <meshPhongMaterial
-        color="#0ea5e9"
-        emissive="#7c3aed"
+        color="#000000"
+        emissive="#6600ff"
         emissiveIntensity={0.5}
         transparent
-        opacity={0.1}
-        shininess={100}
+        opacity={0.6}
+        wireframe
       />
     </Sphere>
   )
 }
 
-const FloatingLights = () => {
-  const group = useRef<THREE.Group>(null)
-  
-  useFrame(({ clock }) => {
-    if (group.current) {
-      group.current.rotation.y = clock.getElapsedTime() * 0.1
-    }
-  })
-  
+const WebGLBackground = () => {
   return (
-    <group ref={group}>
-      {[...Array(5)].map((_, i) => {
-        const angle = (i / 5) * Math.PI * 2
-        const radius = 3.5
-        const x = Math.cos(angle) * radius
-        const z = Math.sin(angle) * radius
-        const y = Math.sin(i * 0.5) * 0.5
-        
-        return (
-          <mesh key={i} position={[x, y, z]}>
-            <sphereGeometry args={[0.1, 16, 16]} />
-            <meshBasicMaterial color={i % 2 === 0 ? "#38bdf8" : "#8b5cf6"} />
-          </mesh>
-        )
-      })}
-    </group>
-  )
-}
-
-export default function WebGLBackground() {
-  return (
-    <div className="webgl-background fixed inset-0 -z-10">
-      <Canvas camera={{ position: [0, 0, 8], fov: 60 }}>
-        <ambientLight intensity={0.2} />
-        <directionalLight position={[10, 10, 5]} intensity={0.5} color="#ffffff" />
-        <directionalLight position={[-10, -10, -5]} intensity={0.2} color="#8b5cf6" />
-        <GradientSphere />
+    <div className="fixed inset-0 -z-10 bg-black">
+      <Canvas
+        camera={{ position: [0, 0, 6], fov: 60 }}
+        dpr={[1, 2]}
+        gl={{ antialias: true, alpha: true }}
+      >
+        <ambientLight intensity={0.5} />
+        <directionalLight position={[10, 10, 5]} intensity={1} />
         <ParticleField />
-        <FloatingLights />
-        <OrbitControls enableZoom={false} enablePan={false} enableRotate={false} />
-        <fog attach="fog" args={['#0f172a', 8, 25]} />
+        <GradientSphere />
+        <OrbitControls
+          enableZoom={false}
+          enablePan={false}
+          enableRotate={false}
+          autoRotate
+          autoRotateSpeed={0.5}
+        />
       </Canvas>
     </div>
   )
 }
+
+export default WebGLBackground
