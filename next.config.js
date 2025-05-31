@@ -16,15 +16,6 @@ const nextConfig = {
       }
     }
     
-    // Add a resolver to handle the BatchedMesh import error
-    config.resolve = {
-      ...config.resolve,
-      alias: {
-        ...config.resolve.alias,
-        'three-mesh-bvh': false, // Disable the three-mesh-bvh package
-      },
-    };
-    
     return config;
   },
   // Disable image optimization to prevent issues during build
@@ -32,7 +23,11 @@ const nextConfig = {
     unoptimized: true
   },
   // Add output configuration for better error handling
-  output: 'standalone'
+  output: 'standalone',
+  // Increase memory limit for builds
+  experimental: {
+    largePageDataBytes: 128 * 1000, // 128KB
+  }
 }
 
 module.exports = nextConfig
