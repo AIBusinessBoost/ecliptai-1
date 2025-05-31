@@ -28,4 +28,32 @@ const DynamicWebGLBackground = dynamic(
   () => import('../components/WebGLBackground').catch(() => () => <FallbackBackground />),
   { 
     ssr: false,
-    loading: () => <F
+    loading: () => <FallbackBackground />
+  }
+)
+
+export default function Home() {
+  const [mounted, setMounted] = useState(false)
+
+  useEffect(() => {
+    setMounted(true)
+  }, [])
+
+  return (
+    <main className="min-h-screen relative">
+      {mounted && <DynamicWebGLBackground />}
+      <Navbar />
+      <Hero />
+      <TrustedBy />
+      <Stats />
+      <HowItWorks />
+      <Features />
+      <Solutions />
+      <CTABanner />
+      <Testimonials />
+      <FAQ />
+      <Contact />
+      <Footer />
+    </main>
+  )
+}

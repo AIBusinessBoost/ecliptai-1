@@ -3,6 +3,7 @@
 import { useState } from 'react'
 import { motion } from 'framer-motion'
 import { useInView } from 'react-intersection-observer'
+import Image from 'next/image'
 
 export default function Testimonials() {
   const [ref, inView] = useInView({
@@ -67,11 +68,12 @@ export default function Testimonials() {
             
             <div className="mb-8 md:mb-0 md:flex items-center">
               <div className="md:w-1/3 mb-6 md:mb-0 flex justify-center">
-                <div className="w-24 h-24 md:w-32 md:h-32 rounded-full overflow-hidden border-4 border-white shadow-lg">
-                  <img 
+                <div className="w-24 h-24 md:w-32 md:h-32 rounded-full overflow-hidden border-4 border-white shadow-lg relative">
+                  <Image 
                     src={testimonials[activeIndex].image} 
-                    alt={testimonials[activeIndex].author} 
-                    className="w-full h-full object-cover"
+                    alt={testimonials[activeIndex].author}
+                    fill
+                    className="object-cover"
                   />
                 </div>
               </div>

@@ -2,6 +2,7 @@
 
 import { motion } from 'framer-motion'
 import { useInView } from 'react-intersection-observer'
+import Image from 'next/image'
 
 export default function Solutions() {
   const [ref, inView] = useInView({
@@ -74,11 +75,12 @@ export default function Solutions() {
                 className="solution-card"
               >
                 <div className={`flex flex-col ${index % 2 === 1 ? 'md:flex-row-reverse' : 'md:flex-row'} bg-white rounded-2xl shadow-xl overflow-hidden`}>
-                  <div className="md:w-1/2">
-                    <img 
+                  <div className="md:w-1/2 relative h-64 md:h-auto">
+                    <Image 
                       src={solution.image} 
-                      alt={solution.title} 
-                      className="w-full h-64 md:h-full object-cover"
+                      alt={solution.title}
+                      fill
+                      className="object-cover"
                     />
                   </div>
                   <div className="md:w-1/2 p-8 md:p-10 flex flex-col justify-center">

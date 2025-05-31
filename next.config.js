@@ -18,8 +18,9 @@ const nextConfig = {
     
     return config;
   },
-  // Disable image optimization to prevent issues during build
+  // Configure image domains for Pexels
   images: {
+    domains: ['images.pexels.com'],
     unoptimized: true
   },
   // Add output configuration for better error handling

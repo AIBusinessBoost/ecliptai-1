@@ -34,7 +34,7 @@ export default function Navbar() {
             <a href="#" className="flex items-center">
               <div className="relative h-10 w-10 mr-2">
                 <Image 
-                  src="/images/ecliptai-logo.svg" 
+                  src="/images/ecliptai-logo-clean.svg" 
                   alt="EcliptAI Logo" 
                   width={40} 
                   height={40} 
