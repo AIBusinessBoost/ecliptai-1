@@ -27,10 +27,12 @@ const nextConfig = {
     
     return config;
   },
-  // Add this to prevent issues with image optimization during build
+  // Disable image optimization to prevent issues during build
   images: {
     unoptimized: true
-  }
+  },
+  // Add output configuration for better error handling
+  output: 'standalone'
 }
 
 module.exports = nextConfig

@@ -16,21 +16,27 @@ import FAQ from '../components/FAQ'
 import Contact from '../components/Contact'
 import Footer from '../components/Footer'
 
-// Dynamically import WebGLBackground with no SSR and explicit suspense
+// Dynamically import WebGLBackground with no SSR
 const DynamicWebGLBackground = dynamic(
   () => import('../components/WebGLBackground'),
   { 
     ssr: false,
     loading: () => (
-      <div className="fixed inset-0 bg-black -z-10"></div>
+      <div className="fixed inset-0 bg-black -z-10">
+        <div className="absolute inset-0 opacity-30 bg-[radial-gradient(ellipse_at_center,_var(--tw-gradient-stops))] from-blue-700 via-transparent to-transparent"></div>
+      </div>
     )
   }
 )
 
 export default function Home() {
   const [isLoaded, setIsLoaded] = useState(false)
+  const [isMounted, setIsMounted] = useState(false)
   
   useEffect(() => {
+    // Mark component as mounted (client-side only)
+    setIsMounted(true)
+    
     // Simulate loading time for WebGL initialization
     const timer = setTimeout(() => {
       setIsLoaded(true)
@@ -38,6 +44,11 @@ export default function Home() {
     
     return () => clearTimeout(timer)
   }, [])
+  
+  // Don't render anything during SSR
+  if (!isMounted) {
+    return null
+  }
   
   return (
     <main className="relative overflow-x-hidden">

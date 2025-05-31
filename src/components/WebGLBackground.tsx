@@ -1,133 +1,64 @@
-'use client'
-
-import { useRef, useMemo } from 'react'
+import { useRef, useEffect, useState } from 'react'
 import { Canvas, useFrame } from '@react-three/fiber'
-import { OrbitControls, Sphere } from '@react-three/drei'
-import * as THREE from 'three'
+import { Stars, useDetectGPU } from '@react-three/drei'
 
-const ParticleField = () => {
-  const points = useRef<THREE.Points>(null)
+// Separate component for the animated mesh
+function AnimatedSphere() {
+  const meshRef = useRef<THREE.Mesh>(null)
   
   useFrame(({ clock }) => {
-    if (points.current) {
-      points.current.rotation.y = clock.getElapsedTime() * 0.05
-      points.current.rotation.x = Math.sin(clock.getElapsedTime() * 0.025) * 0.1
-    }
-  })
-  
-  const particleCount = 3000
-  
-  const positions = useMemo(() => {
-    const positions = new Float32Array(particleCount * 3)
-    const radius = 5
-    
-    for (let i = 0; i < particleCount; i++) {
-      const i3 = i * 3
-      const theta = Math.random() * Math.PI * 2
-      const phi = Math.acos((Math.random() * 2) - 1)
-      
-      // Create a sphere distribution with some randomness
-      const x = radius * Math.sin(phi) * Math.cos(theta) + (Math.random() - 0.5) * 2
-      const y = radius * Math.sin(phi) * Math.sin(theta) + (Math.random() - 0.5) * 2
-      const z = radius * Math.cos(phi) + (Math.random() - 0.5) * 2
-      
-      positions[i3] = x
-      positions[i3 + 1] = y
-      positions[i3 + 2] = z
-    }
-    
-    return positions
-  }, [particleCount])
-  
-  const colors = useMemo(() => {
-    const colors = new Float32Array(particleCount * 3)
-    
-    for (let i = 0; i < particleCount; i++) {
-      const i3 = i * 3
-      
-      // Create a gradient from blue to purple
-      const blueToViolet = Math.random()
-      colors[i3] = 0.1 + blueToViolet * 0.2 // R: low to medium
-      colors[i3 + 1] = 0.4 + blueToViolet * 0.2 // G: medium
-      colors[i3 + 2] = 0.8 - blueToViolet * 0.3 // B: high to medium
-    }
-    
-    return colors
-  }, [particleCount])
-  
-  return (
-    <points ref={points}>
-      <bufferGeometry>
-        <bufferAttribute
-          attach="attributes-position"
-          count={particleCount}
-          array={positions}
-          itemSize={3}
-        />
-        <bufferAttribute
-          attach="attributes-color"
-          count={particleCount}
-          array={colors}
-          itemSize={3}
-        />
-      </bufferGeometry>
-      <pointsMaterial
-        size={0.03}
-        vertexColors
-        transparent
-        opacity={0.7}
-        sizeAttenuation
-      />
-    </points>
-  )
-}
-
-const GradientSphere = () => {
-  const mesh = useRef<THREE.Mesh>(null)
-  
-  useFrame(({ clock }) => {
-    if (mesh.current) {
-      mesh.current.position.y = Math.sin(clock.getElapsedTime() * 0.3) * 0.2
-      mesh.current.rotation.y += 0.005
+    if (meshRef.current) {
+      meshRef.current.rotation.x = clock.getElapsedTime() * 0.1
+      meshRef.current.rotation.y = clock.getElapsedTime() * 0.15
     }
   })
   
   return (
-    <Sphere args={[1.5, 32, 32]} position={[0, 0, 0]}>
-      <meshPhongMaterial
-        color="#000000"
-        emissive="#6600ff"
-        emissiveIntensity={0.5}
-        transparent
-        opacity={0.6}
-        wireframe
-      />
-    </Sphere>
+    <mesh ref={meshRef} position={[0, 0, -5]}>
+      <sphereGeometry args={[2, 32, 32]} />
+      <meshStandardMaterial color="#1e40af" wireframe />
+    </mesh>
   )
 }
 
-const WebGLBackground = () => {
+export default function WebGLBackground() {
+  const [mounted, setMounted] = useState(false)
+  const [fallback, setFallback] = useState(false)
+  
+  // Only render on client side
+  useEffect(() => {
+    setMounted(true)
+    
+    // Check if WebGL is supported
+    const canvas = document.createElement('canvas')
+    const gl = canvas.getContext('webgl') || canvas.getContext('experimental-webgl')
+    
+    if (!gl) {
+      setFallback(true)
+    }
+  }, [])
+  
+  // Show nothing during SSR
+  if (!mounted) return null
+  
+  // Fallback for devices without WebGL support
+  if (fallback) {
+    return (
+      <div className="fixed inset-0 bg-gradient-to-b from-black to-blue-950 -z-10">
+        <div className="absolute inset-0 opacity-30 bg-[radial-gradient(ellipse_at_center,_var(--tw-gradient-stops))] from-blue-700 via-transparent to-transparent"></div>
+      </div>
+    )
+  }
+  
   return (
-    <div className="fixed inset-0 -z-10 bg-black">
-      <Canvas
-        camera={{ position: [0, 0, 6], fov: 60 }}
-        dpr={[1, 2]}
-        gl={{ antialias: true, alpha: true }}
-      >
-        <ambientLight intensity={0.5} />
-        <directionalLight position={[10, 10, 5]} intensity={1} />
-        <ParticleField />
-        <GradientSphere />
-        <OrbitControls
-          enableZoom={false}
-          enablePan={false}
-          enableRotate={false}
-          autoRotate
-          autoRotateSpeed={0.5}
-        />
+    <div className="fixed inset-0 -z-10">
+      <Canvas camera={{ position: [0, 0, 5], fov: 45 }}>
+        <ambientLight intensity={0.2} />
+        <pointLight position={[10, 10, 10]} intensity={0.8} />
+        <AnimatedSphere />
+        <Stars radius={100} depth={50} count={1000} factor={4} saturation={0} fade speed={1} />
       </Canvas>
+      <div className="absolute inset-0 bg-gradient-to-b from-transparent via-transparent to-black opacity-70"></div>
     </div>
   )
 }
-
-export default WebGLBackground
